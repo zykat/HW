@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "9454df2d-5b14-43fe-bb36-c218a557f4de",
+		"name": "Postman_lection_2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16117551"
+	},
+	"item": [
+		{
+			"name": "lecture /user_info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();\r",
+							"let resp_salary_1_5 = jsonData.family.u_salary_1_5_year\r",
+							"let req = request.data\r",
+							"\r",
+							"let req_salary = req.salary;\r",
+							"let req_salary_1_5 = req_salary * 4;\r",
+							"\r",
+							"let person = jsonData.family.children;\r",
+							"\r",
+							"console.log(\"person --\", person)\r",
+							"console.log(\"salary_1_5 --\", req_salary)\r",
+							"\r",
+							"pm.environment.set(\"salary\", req_salary_1_5);\r",
+							"\r",
+							"\r",
+							"pm.test(\"Salary_4\", function () {\r",
+							"    pm.expect(req_salary_1_5).to.eql(req_salary_1_5);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check family\", function () {\r",
+							"    pm.expect(JSON.stringify(jsonData)).to.include(\"family\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Person_age\", function () {\r",
+							"    pm.expect(person[1][1]).to.eql(12);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "John",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "{{age}}",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "4000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://162.55.220.72:5005/user_info_3?name=John&age={{age}}&salary={{salary}}",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"user_info_3"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "John"
+						},
+						{
+							"key": "age",
+							"value": "{{age}}"
+						},
+						{
+							"key": "salary",
+							"value": "{{salary}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
