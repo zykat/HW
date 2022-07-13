@@ -256,6 +256,122 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "object_info_4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 2. Status 200 test\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// 3. Parse response body to json\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"// 4. Parse request\r",
+							"let req = pm.request.url.query.toObject()\r",
+							"console.log(req)\r",
+							"\r",
+							"// 5. Name in response is equal to request (from request)\r",
+							"let resp_name = jsonData.name\r",
+							"let req_name = req.name\r",
+							"pm.test(\"Names are equal\", function () {\r",
+							"    pm.expect(resp_name).to.eql(req_name);\r",
+							"});\r",
+							"\r",
+							"// 6. Age in response is equal to request (from request)\r",
+							"let resp_age = jsonData.age\r",
+							"let req_age = req.age\r",
+							"pm.test(\"Age is correct\", function () {\r",
+							"    pm.expect(resp_age).to.eql(Number(req_age));\r",
+							"});\r",
+							"\r",
+							"// 7. Console salary from request\r",
+							"let req_salary = req.salary\r",
+							"console.log(req_salary)\r",
+							"\r",
+							"// 8. Console salary from response\r",
+							"let resp_salary = jsonData.salary\r",
+							"console.log(resp_salary)\r",
+							"\r",
+							"// 9. Console salary[0] from response\r",
+							"console.log(resp_salary[0])\r",
+							"\r",
+							"// 10. Console salary[1] from response\r",
+							"console.log(resp_salary[1])\r",
+							"\r",
+							"// 11. Console salary[2] from response\r",
+							"console.log(resp_salary[2])\r",
+							"\r",
+							"// 12. Check salary[0] from response is equal to salary from request \r",
+							"pm.test(\"Salary response is equal salary request\", function () {\r",
+							"    pm.expect(resp_salary[0]).to.eql(Number(req_salary));\r",
+							"});\r",
+							"\r",
+							"// 13. Check salary[1] from response is equal to salary*2 from request \r",
+							"pm.test(\"Salary[1] response is equal salary*2 request\", function () {\r",
+							"    pm.expect(Number(resp_salary[1])).to.eql(Number(req_salary)*2);\r",
+							"});\r",
+							"\r",
+							"// 14. Check salary[2] from response is equal to salary*3 from request \r",
+							"pm.test(\"Salary[2] response is equal salary*3 request\", function () {\r",
+							"    pm.expect(Number(resp_salary[2])).to.eql(Number(req_salary)*3);\r",
+							"});\r",
+							"\r",
+							"// 15. Create variable name\r",
+							"pm.environment.set(\"name\", resp_name);\r",
+							"pm.environment.get(\"name\");\r",
+							"\r",
+							"// 16. Create variable age\r",
+							"pm.environment.set(\"age\", resp_age);\r",
+							"\r",
+							"// 17. Create variable salary\r",
+							"pm.environment.set(\"salary\", resp_salary);\r",
+							"\r",
+							"// 21. Cycle \r",
+							"console.log(resp_salary)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://162.55.220.72:5005/object_info_4?name=Sam&age=48&salary=5000",
+					"protocol": "http",
+					"host": [
+						"162",
+						"55",
+						"220",
+						"72"
+					],
+					"port": "5005",
+					"path": [
+						"object_info_4"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Sam"
+						},
+						{
+							"key": "age",
+							"value": "48"
+						},
+						{
+							"key": "salary",
+							"value": "5000"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
